@@ -1,0 +1,30 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type CustomerType {
+  _id: ID!
+  name: String!
+  email: String!
+}
+
+type Query {
+  findAllCustomers: [CustomerType!]!
+  findCustomer(id: String!): CustomerType!
+}
+
+type Mutation {
+  createCustomer(createCustomerInput: CreateCustomerInput!): CustomerType!
+  updateCustomer(updateCustomerInput: UpdateCustomerInput!): CustomerType!
+}
+
+input CreateCustomerInput {
+  name: String!
+  email: String!
+}
+
+input UpdateCustomerInput {
+  name: String
+  email: String
+  id: String!
+}

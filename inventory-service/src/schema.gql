@@ -1,0 +1,44 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Product {
+  _id: ID!
+  name: String!
+  price: Int!
+  stock: Int!
+}
+
+type Order {
+  _id: ID!
+  productId: String!
+  customerId: String!
+  status: String!
+  createdAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Query {
+  getProducts: [Product!]!
+  getOrders: [Order!]!
+}
+
+type Mutation {
+  createProduct(createProductInput: CreateProductInput!): Product!
+  createOrder(createOrderInput: CreateOrderInput!): Order!
+}
+
+input CreateProductInput {
+  name: String!
+  price: Int!
+  stock: Int!
+}
+
+input CreateOrderInput {
+  productId: String!
+  customerId: String!
+}

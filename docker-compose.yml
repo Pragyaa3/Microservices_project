@@ -1,0 +1,50 @@
+
+services:
+  inventory-service:
+    build: ./inventory-service
+    ports:
+      - '3000:3000'
+    depends_on:
+      - rabbitmq
+    env_file:
+      - ./inventory-service/.env.local
+    environment:
+      - PORT=3000
+      - RABBITMQ_URL=amqp://rabbitmq:5672
+    restart: unless-stopped
+
+  customer-service:
+    build: ./customer-service
+    ports:
+      - '3001:3001'
+    depends_on:
+      - rabbitmq
+    env_file:
+      - ./customer-service/.env.local
+    environment:
+      - PORT=3001
+      - RABBITMQ_URL=amqp://rabbitmq:5672
+    restart: unless-stopped
+
+  frontend:
+    build: ./ecommerce-frontend
+    ports:
+      - '3002:3002'
+    depends_on:
+      - inventory-service
+      - customer-service
+    env_file:
+      - ./ecommerce-frontend/.env.local
+    restart: unless-stopped
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
