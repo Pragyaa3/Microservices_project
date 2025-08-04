@@ -7,11 +7,13 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { OrdersModule } from './orders/orders.module';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 @Module({
   imports: [
-    // ✅ MongoDB connection
-    MongooseModule.forRoot('mongodb+srv://pragyahurmade2226:toabvh5SCo1cUCSO@medisync-cluster.ebsed.mongodb.net/inventory-db?retryWrites=true&w=majority&appName=Medisync-cluster'),
+    // ✅ MongoDB connection using env
+    MongooseModule.forRoot(process.env.MONGO_URI!),
 
     // ✅ GraphQL setup
     GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -20,9 +22,8 @@ import { OrdersModule } from './orders/orders.module';
       playground: true,
     }),
 
-    // ✅ Your Products feature
+    // ✅ Feature modules
     ProductsModule,
-
     OrdersModule,
   ],
   controllers: [AppController],

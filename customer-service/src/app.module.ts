@@ -4,6 +4,8 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CustomersModule } from './customers/customers.module';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 @Module({
   imports: [
@@ -12,7 +14,7 @@ import { CustomersModule } from './customers/customers.module';
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       playground: true,
     }),
-    MongooseModule.forRoot('mongodb+srv://pragyahurmade2226:toabvh5SCo1cUCSO@medisync-cluster.ebsed.mongodb.net/customer-db?retryWrites=true&w=majority&appName=Medisync-cluster'),
+    MongooseModule.forRoot(process.env.MONGO_URI!),
     CustomersModule,
   ],
 })
